@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String
+  googleId      String?   @unique
+  role          String    // Admin, Technician, Manager, Client
+  image         String?   // Google profile image
+  samples       Sample[]  // Clients can have samples
+  assignedTests Test[]    // Technicians can have assigned tests
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Sample {
+  id           String    @id @default(cuid())
+  sampleCode   String    @unique
+  clientId     String
+  client       User      @relation(fields: [clientId], references: [id])
+  materialType String
+  description  String?
+  dateReceived DateTime
+  tests        Test[]
+  status       String    // Pending, InProgress, Completed, Rejected
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Test {
+  id             String    @id @default(cuid())
+  testCode       String    @unique
+  sampleId       String
+  sample         Sample    @relation(fields: [sampleId], references: [id])
+  testType       String
+  parameters     Json
+  results        Json?
+  status         String    // Pending, InProgress, Completed, Failed
+  assignedTo     String?
+  technician     User?     @relation(fields: [assignedTo], references: [id])
+  startDate      DateTime?
+  completionDate DateTime?
+  notes          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String  // "oauth"
+  provider          String  // "google"
+  providerAccountId String
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Equipment {
+  id              String    @id @default(cuid())
+  name            String
+  type            String
+  serialNumber    String    @unique
+  calibrationDate DateTime
+  nextCalibration DateTime
+  status          String    // Available, InUse, Maintenance, Retired
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model TestMethod {
+  id          String    @id @default(cuid())
+  code        String    @unique
+  name        String
+  description String
+  parameters  Json
+  standardRef String?   // Reference to industry standards (e.g., ASTM, ISO)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
