@@ -1,90 +1,208 @@
 'use client'
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useEffect, useState } from 'react'
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material'
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { Add as AddIcon, Close as CloseIcon } from '@mui/icons-material'
+import { useStore } from '@/lib/store'
+import TestSubmissionForm, { TestFormData } from '@/components/tests/TestSubmissionForm'
+import SearchBar from '@/components/common/SearchBar'
+
+interface Test {
+  id: string
+  name: string
+  sampleId: string
+  type: string
+  status: string
+  dueDate: string
+  priority: string
+  notes: string
+}
 
 export default function TestsPage() {
+  const { tests, loading, fetchTests, addTest, updateTest, deleteTest } = useStore()
+  const [searchTerm, setSearchTerm] = useState('')
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [selectedTest, setSelectedTest] = useState<Test | null>(null)
+
+  useEffect(() => {
+    fetchTests()
+  }, [fetchTests])
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term)
+  }
+
+  const handleAddTest = async (formData: TestFormData) => {
+    if (selectedTest) {
+      await updateTest(selectedTest.id, formData)
+    } else {
+      await addTest(formData)
+    }
+    setIsDialogOpen(false)
+  }
+
+  const handleOpenDialog = (test: Test | null) => {
+    setSelectedTest(test)
+    setIsDialogOpen(true)
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'completed':
+        return 'success.main'
+      case 'in progress':
+        return 'info.main'
+      case 'failed':
+        return 'error.main'
+      default:
+        return 'warning.main'
+    }
+  }
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority.toLowerCase()) {
+      case 'urgent':
+        return 'error.main'
+      case 'high':
+        return 'warning.main'
+      case 'normal':
+        return 'info.main'
+      default:
+        return 'success.main'
+    }
+  }
+
+  const columns: GridColDef[] = [
+    { field: 'name', headerName: 'Test Name', width: 200 },
+    { field: 'sampleId', headerName: 'Sample ID', width: 130 },
+    { field: 'type', headerName: 'Test Type', width: 150 },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 130,
+      renderCell: (params) => (
+        <Box
+          sx={{
+            backgroundColor: getStatusColor(params.value),
+            color: 'white',
+            px: 1,
+            py: 0.5,
+            borderRadius: 1,
+            fontSize: '0.875rem',
+          }}
+        >
+          {params.value}
+        </Box>
+      ),
+    },
+    { field: 'dueDate', headerName: 'Due Date', width: 130 },
+    {
+      field: 'priority',
+      headerName: 'Priority',
+      width: 130,
+      renderCell: (params) => (
+        <Box
+          sx={{
+            backgroundColor: getPriorityColor(params.value),
+            color: 'white',
+            px: 1,
+            py: 0.5,
+            borderRadius: 1,
+            fontSize: '0.875rem',
+          }}
+        >
+          {params.value}
+        </Box>
+      ),
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      width: 130,
+      sortable: false,
+      renderCell: (params) => (
+        <Stack direction="row" spacing={1}>
+          <Button size="small" onClick={() => handleOpenDialog(params.row)}>
+            Edit
+          </Button>
+          <Button size="small" color="error" onClick={() => deleteTest(params.row.id)}>
+            Delete
+          </Button>
+        </Stack>
+      ),
+    },
+  ]
+
+  const filteredTests = Array.isArray(tests) 
+    ? tests.filter(
+        (test) =>
+          test.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          test.sampleId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          test.type.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
+
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Tests</h1>
-        <Button>New Test</Button>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Active Tests</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">24</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Completed Today</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">12</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Pending Review</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">8</div>
-          </CardContent>
-        </Card>
-      </div>
+    <Box sx={{ p: 3 }}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
+        <Typography variant="h4">Tests</Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          onClick={() => handleOpenDialog(null)}
+        >
+          Add Test
+        </Button>
+      </Stack>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Test Queue</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {/* Search and filter controls */}
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <Label htmlFor="search">Search</Label>
-                <Input id="search" placeholder="Search tests..." />
-              </div>
-              <div className="w-[200px]">
-                <Label htmlFor="status">Status</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Filter by status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All</SelectItem>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
-                    <SelectItem value="pending">Pending Review</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+      <Paper sx={{ mb: 3, p: 2 }}>
+        <SearchBar onSearch={handleSearch} />
+      </Paper>
 
-            {/* Test list will go here */}
-            <div className="border rounded-lg divide-y">
-              {/* Sample test items */}
-              {Array.from({length: 5}).map((_, i) => (
-                <div key={i} className="p-4 flex items-center justify-between hover:bg-accent/50">
-                  <div>
-                    <div className="font-medium">Test #{1000 + i}</div>
-                    <div className="text-sm text-muted-foreground">Client: Sample Client {i + 1}</div>
-                  </div>
-                  <Button variant="outline" size="sm">View Details</Button>
-                </div>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+      <Paper sx={{ height: 600 }}>
+        <DataGrid
+          rows={filteredTests}
+          columns={columns}
+          loading={loading.tests}
+          disableRowSelectionOnClick
+          getRowId={(row) => row.id}
+        />
+      </Paper>
+
+      <Dialog
+        open={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          <Stack direction="row" alignItems="center" justifyContent="space-between">
+            <Typography variant="h6">{selectedTest ? 'Edit Test' : 'Add New Test'}</Typography>
+            <IconButton onClick={() => setIsDialogOpen(false)} size="small">
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+        </DialogTitle>
+        <DialogContent>
+          <TestSubmissionForm
+            initialData={selectedTest || undefined}
+            onSubmit={handleAddTest}
+            onCancel={() => setIsDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
+    </Box>
   )
 }

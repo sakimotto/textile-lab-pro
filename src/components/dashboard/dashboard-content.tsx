@@ -2,10 +2,27 @@
 
 import { useState } from 'react'
 import { format } from 'date-fns'
-import { Activity, Beaker, Clock, FileText } from 'lucide-react'
-import { FeatureCard } from './feature-card'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Paper,
+  Stack,
+  Chip,
+} from '@mui/material'
+import {
+  Science as ScienceIcon,
+  Assignment as AssignmentIcon,
+  People as PeopleIcon,
+  Schedule as ScheduleIcon,
+} from '@mui/icons-material'
+import { useStore } from '@/lib/store'
 
 interface TestRequest {
   client: string
@@ -20,122 +37,122 @@ const INITIAL_REQUESTS: TestRequest[] = [
 ]
 
 export function DashboardContent() {
+  const { tests, samples, clients } = useStore()
+
+  const stats = [
+    {
+      title: 'Active Tests',
+      value: tests.filter((t) => t.status === 'In Progress').length,
+      icon: <ScienceIcon />,
+      color: '#2196f3',
+    },
+    {
+      title: 'Pending Samples',
+      value: samples.filter((s) => s.status === 'Pending').length,
+      icon: <AssignmentIcon />,
+      color: '#ff9800',
+    },
+    {
+      title: 'Total Clients',
+      value: clients.length,
+      icon: <PeopleIcon />,
+      color: '#4caf50',
+    },
+  ]
+
+  const recentTests = tests
+    .sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())
+    .slice(0, 5)
+
   const [latestRequests] = useState<TestRequest[]>(INITIAL_REQUESTS)
   const [jobsInWork] = useState<TestRequest[]>(INITIAL_REQUESTS.slice(0, 2))
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Advanced Textile Testing Laboratory</h1>
-        <p className="text-lg text-muted-foreground">
-          Comprehensive physical testing services for all your textile quality assurance needs
-        </p>
-      </div>
+    <Box sx={{ p: 3 }}>
+      <Typography variant="h4" gutterBottom>
+        Advanced Textile Testing Laboratory
+      </Typography>
 
-      <div className="grid md:grid-cols-3 gap-6">
-        <FeatureCard
-          icon={Activity}
-          title="Physical Testing"
-          description="Tensile strength, tear resistance, abrasion testing"
-        />
-        <FeatureCard
-          icon={Beaker}
-          title="Chemical Analysis"
-          description="Fiber composition, pH testing, color fastness"
-        />
-        <FeatureCard
-          icon={Clock}
-          title="Quick Turnaround"
-          description="Fast and reliable testing results"
-        />
-      </div>
+      <Grid container spacing={3} sx={{ mb: 3 }}>
+        {stats.map((stat) => (
+          <Grid item xs={12} sm={4} key={stat.title}>
+            <Card>
+              <CardContent>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Box
+                    sx={{
+                      p: 1.5,
+                      borderRadius: 2,
+                      bgcolor: stat.color + '20',
+                      color: stat.color,
+                    }}
+                  >
+                    {stat.icon}
+                  </Box>
+                  <Box>
+                    <Typography variant="h5">{stat.value}</Typography>
+                    <Typography color="text.secondary">{stat.title}</Typography>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card>
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4">Testing Statistics</h3>
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span className="text-sm">Tests Completed</span>
-                  <span className="font-semibold">1,042</span>
-                </div>
-                <div className="progress-bar">
-                  <div className="progress-bar-fill" style={{ width: '95%' }} />
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span className="text-sm">Average Processing Time</span>
-                  <span className="font-semibold">24h</span>
-                </div>
-                <div className="progress-bar">
-                  <div className="progress-bar-fill" style={{ width: '85%' }} />
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4">Latest Reports</h3>
-            <div className="space-y-4">
-              {[
-                "Tensile Strength Analysis - Cotton Blend",
-                "Fabric Weight Test - Polyester",
-                "Colorfastness Evaluation - Denim",
-                "Fiber Composition Analysis - Mixed Fabric"
-              ].map((report, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <FileText className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm">{report}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card>
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4">Latest Requests</h3>
-            <div className="space-y-4">
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6}>
+          <Paper sx={{ p: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              Latest Requests
+            </Typography>
+            <List>
               {latestRequests.map((request, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">{request.client}</p>
-                    <p className="text-sm text-muted-foreground">{request.test}</p>
-                  </div>
-                  <Badge variant="outline">
-                    {format(request.date, 'MMM dd')}
-                  </Badge>
-                </div>
+                <ListItem key={index}>
+                  <ListItemIcon>
+                    <ScheduleIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={request.client}
+                    secondary={request.test}
+                  />
+                  <Chip
+                    label={format(request.date, 'MMM dd')}
+                    color="info"
+                    size="small"
+                  />
+                </ListItem>
               ))}
-            </div>
-          </CardContent>
-        </Card>
+            </List>
+          </Paper>
+        </Grid>
 
-        <Card>
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4">Jobs in Work</h3>
-            <div className="space-y-4">
+        <Grid item xs={12} md={6}>
+          <Paper sx={{ p: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              Jobs in Work
+            </Typography>
+            <List>
               {jobsInWork.map((job, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">{job.client}</p>
-                    <p className="text-sm text-muted-foreground">{job.test}</p>
-                  </div>
-                  <Badge variant="secondary">
-                    {format(job.date, 'MMM dd')}
-                  </Badge>
-                </div>
+                <ListItem key={index}>
+                  <ListItemIcon>
+                    <ScheduleIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={job.client}
+                    secondary={job.test}
+                  />
+                  <Chip
+                    label={format(job.date, 'MMM dd')}
+                    color="info"
+                    size="small"
+                  />
+                </ListItem>
               ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+            </List>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Box>
   )
 }

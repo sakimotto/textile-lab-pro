@@ -1,104 +1,162 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import CalendarComponent from '@/components/calendar/CalendarComponent';
-import EventDialog from '@/components/calendar/EventDialog';
-import { AnyEvent } from '@/types/calendar';
+import { useState } from 'react'
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
+import format from 'date-fns/format'
+import parse from 'date-fns/parse'
+import startOfWeek from 'date-fns/startOfWeek'
+import getDay from 'date-fns/getDay'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material'
+import { Close as CloseIcon } from '@mui/icons-material'
+import { useStore } from '@/lib/store'
 
-// TODO: Replace with actual data fetching
-const mockEvents: AnyEvent[] = [
-  {
-    id: '1',
-    title: 'Tensile Strength Test',
-    start: new Date(2025, 0, 20, 10, 0),
-    end: new Date(2025, 0, 20, 12, 0),
-    type: 'test',
-    status: 'pending',
-    testId: 'TEST001',
-    sampleId: 'SAMPLE001',
-    clientName: 'Acme Textiles',
-    technicianName: 'John Doe',
-    description: 'Tensile strength testing for cotton fabric samples',
-  },
-  {
-    id: '2',
-    title: 'Equipment Calibration',
-    start: new Date(2025, 0, 21, 14, 0),
-    end: new Date(2025, 0, 21, 16, 0),
-    type: 'maintenance',
-    status: 'scheduled',
-    equipmentId: 'EQ001',
-    equipmentName: 'Tensile Tester',
-    technicianName: 'Jane Smith',
-    description: 'Regular calibration of tensile testing equipment',
-  },
-  {
-    id: '3',
-    title: 'Client Meeting - FashionCo',
-    start: new Date(2025, 0, 22, 9, 0),
-    end: new Date(2025, 0, 22, 10, 0),
-    type: 'client-visit',
-    status: 'confirmed',
-    clientId: 'CLIENT001',
-    clientName: 'FashionCo',
-    purpose: 'Discuss new testing requirements',
-    description: 'Meeting with FashionCo to discuss upcoming testing projects',
-  },
-];
+const locales = {
+  'en-US': require('date-fns/locale/en-US'),
+}
+
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  locales,
+})
+
+interface CalendarEvent {
+  id: string
+  title: string
+  start: Date
+  end: Date
+  type: 'test' | 'sample' | 'report'
+  status: string
+  testId?: string
+  sampleId?: string
+  clientName?: string
+  technicianName?: string
+  description?: string
+}
 
 export default function CalendarPage() {
-  const [events, setEvents] = useState<AnyEvent[]>(mockEvents);
-  const [selectedEvent, setSelectedEvent] = useState<AnyEvent | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { tests, samples, reports } = useStore()
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-  const handleEventSelect = (event: AnyEvent) => {
-    setSelectedEvent(event);
-    setIsDialogOpen(true);
-  };
+  // Convert tests, samples, and reports to calendar events
+  const events: CalendarEvent[] = [
+    ...tests.map((test) => ({
+      id: test.id,
+      title: test.name,
+      start: new Date(test.dueDate),
+      end: new Date(test.dueDate),
+      type: 'test' as const,
+      status: test.status,
+      testId: test.id,
+      sampleId: test.sampleId,
+      description: test.notes,
+    })),
+    // Add sample and report events here when needed
+  ]
 
-  const handleEventAdd = (start: Date, end: Date) => {
-    // TODO: Implement event creation dialog
-    console.log('Add event:', { start, end });
-  };
+  const handleEventSelect = (event: CalendarEvent) => {
+    setSelectedEvent(event)
+    setIsDialogOpen(true)
+  }
 
-  const handleRangeChange = (start: Date, end: Date) => {
-    // TODO: Fetch events for the selected date range
-    console.log('Range changed:', { start, end });
-  };
-
-  const handleEventSave = (event: AnyEvent) => {
-    setEvents(events.map((e) => (e.id === event.id ? event : e)));
-    setIsDialogOpen(false);
-  };
-
-  const handleEventDelete = (event: AnyEvent) => {
-    setEvents(events.filter((e) => e.id !== event.id));
-    setIsDialogOpen(false);
-  };
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false)
+    setSelectedEvent(null)
+  }
 
   return (
-    <div className="p-4">
-      <div className="mb-4">
-        <h1 className="text-2xl font-bold">Laboratory Calendar</h1>
-        <p className="text-gray-600">
-          Manage test schedules, maintenance, and client visits
-        </p>
-      </div>
+    <Box sx={{ p: 3, height: 'calc(100vh - 100px)' }}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
+        <Typography variant="h4">Calendar</Typography>
+      </Stack>
 
-      <CalendarComponent
+      <Calendar
+        localizer={localizer}
         events={events}
-        onEventSelect={handleEventSelect}
-        onRangeChange={handleRangeChange}
-        onEventAdd={handleEventAdd}
+        startAccessor="start"
+        endAccessor="end"
+        onSelectEvent={handleEventSelect}
+        style={{ height: '100%' }}
       />
 
-      <EventDialog
-        event={selectedEvent}
-        isOpen={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-        onSave={handleEventSave}
-        onDelete={handleEventDelete}
-      />
-    </div>
-  );
+      <Dialog open={isDialogOpen} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
+        <DialogTitle>
+          <Stack direction="row" alignItems="center" justifyContent="space-between">
+            Event Details
+            <IconButton edge="end" onClick={handleCloseDialog}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+        </DialogTitle>
+        <DialogContent dividers>
+          {selectedEvent && (
+            <Stack spacing={2}>
+              <TextField
+                label="Title"
+                value={selectedEvent.title}
+                fullWidth
+                InputProps={{ readOnly: true }}
+              />
+              <TextField
+                label="Type"
+                value={selectedEvent.type}
+                fullWidth
+                InputProps={{ readOnly: true }}
+              />
+              <TextField
+                label="Status"
+                value={selectedEvent.status}
+                fullWidth
+                InputProps={{ readOnly: true }}
+              />
+              {selectedEvent.description && (
+                <TextField
+                  label="Description"
+                  value={selectedEvent.description}
+                  fullWidth
+                  multiline
+                  rows={4}
+                  InputProps={{ readOnly: true }}
+                />
+              )}
+              {selectedEvent.clientName && (
+                <TextField
+                  label="Client"
+                  value={selectedEvent.clientName}
+                  fullWidth
+                  InputProps={{ readOnly: true }}
+                />
+              )}
+              {selectedEvent.technicianName && (
+                <TextField
+                  label="Technician"
+                  value={selectedEvent.technicianName}
+                  fullWidth
+                  InputProps={{ readOnly: true }}
+                />
+              )}
+            </Stack>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  )
 }

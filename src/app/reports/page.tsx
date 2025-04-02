@@ -1,154 +1,133 @@
 'use client'
 
-import { FileText, Download, Filter, Search } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
+import { useEffect, useState } from 'react'
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material'
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { Add as AddIcon, Close as CloseIcon, Download as DownloadIcon } from '@mui/icons-material'
+import { useStore } from '@/lib/store'
+import SearchBar from '@/components/common/SearchBar'
+
+interface Report {
+  id: string
+  name: string
+  type: string
+  status: string
+}
 
 export default function ReportsPage() {
+  const { reports, loading, fetchReports, addReport, updateReport, deleteReport } = useStore()
+  const [searchTerm, setSearchTerm] = useState('')
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [selectedReport, setSelectedReport] = useState<Report | null>(null)
+
+  useEffect(() => {
+    fetchReports()
+  }, [fetchReports])
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term)
+  }
+
+  const handleGenerateReport = () => {
+    // TODO: Implement report generation
+    console.log('Generating report...')
+  }
+
+  const handleDownload = (report: Report) => {
+    // TODO: Implement report download
+    console.log('Downloading report:', report.id)
+  }
+
+  const columns: GridColDef[] = [
+    { field: 'name', headerName: 'Name', width: 250 },
+    { field: 'type', headerName: 'Type', width: 150 },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 130,
+      renderCell: (params) => (
+        <Box
+          sx={{
+            backgroundColor:
+              params.value === 'Completed'
+                ? 'success.main'
+                : params.value === 'In Progress'
+                ? 'info.main'
+                : 'warning.main',
+            color: 'white',
+            px: 1,
+            py: 0.5,
+            borderRadius: 1,
+            fontSize: '0.875rem',
+          }}
+        >
+          {params.value}
+        </Box>
+      ),
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      width: 130,
+      sortable: false,
+      renderCell: (params) => (
+        <Stack direction="row" spacing={1}>
+          <IconButton size="small" onClick={() => handleDownload(params.row)}>
+            <DownloadIcon />
+          </IconButton>
+          <Button size="small" color="error" onClick={() => deleteReport(params.row.id)}>
+            Delete
+          </Button>
+        </Stack>
+      ),
+    },
+  ]
+
+  const filteredReports = Array.isArray(reports)
+    ? reports.filter(
+        (report) =>
+          report.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          report.type.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
+
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Reports</h1>
-        <Button>Generate New Report</Button>
-      </div>
+    <Box sx={{ p: 3 }}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
+        <Typography variant="h4">Reports</Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          onClick={handleGenerateReport}
+        >
+          Generate Report
+        </Button>
+      </Stack>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Total Reports</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">1,234</div>
-            <p className="text-sm text-muted-foreground">+12% from last month</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Pending Reports</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">15</div>
-            <p className="text-sm text-muted-foreground">Awaiting review</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Average Processing Time</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">2.4h</div>
-            <p className="text-sm text-muted-foreground">From test completion to report</p>
-          </CardContent>
-        </Card>
-      </div>
+      <Paper sx={{ mb: 3, p: 2 }}>
+        <SearchBar onSearch={handleSearch} />
+      </Paper>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Report Archive</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {/* Search and filters */}
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder="Search reports..." className="pl-8" />
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <Select>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Test Type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Types</SelectItem>
-                    <SelectItem value="physical">Physical Testing</SelectItem>
-                    <SelectItem value="chemical">Chemical Analysis</SelectItem>
-                    <SelectItem value="durability">Durability Testing</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Date Range" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Time</SelectItem>
-                    <SelectItem value="today">Today</SelectItem>
-                    <SelectItem value="week">This Week</SelectItem>
-                    <SelectItem value="month">This Month</SelectItem>
-                    <SelectItem value="quarter">This Quarter</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Button variant="outline" size="icon">
-                  <Filter className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Reports list */}
-            <div className="border rounded-lg divide-y">
-              {[
-                {
-                  id: "TR-2024-001",
-                  title: "Tensile Strength Analysis Report",
-                  client: "FashionCo Industries",
-                  date: "2024-01-18",
-                  status: "Final"
-                },
-                {
-                  id: "TR-2024-002",
-                  title: "Color Fastness Test Report",
-                  client: "Textile Innovations Ltd",
-                  date: "2024-01-17",
-                  status: "Draft"
-                },
-                {
-                  id: "TR-2024-003",
-                  title: "Fiber Composition Analysis",
-                  client: "EcoFabrics Co",
-                  date: "2024-01-16",
-                  status: "Final"
-                },
-                {
-                  id: "TR-2024-004",
-                  title: "Abrasion Resistance Report",
-                  client: "SportsTex International",
-                  date: "2024-01-15",
-                  status: "Review"
-                },
-              ].map((report) => (
-                <div key={report.id} className="p-4 flex items-center justify-between hover:bg-accent/50">
-                  <div className="flex items-center gap-4">
-                    <FileText className="h-8 w-8 text-muted-foreground" />
-                    <div>
-                      <div className="font-medium">{report.title}</div>
-                      <div className="text-sm text-muted-foreground">
-                        {report.client} • {report.date}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge variant={
-                      report.status === "Final" ? "default" :
-                      report.status === "Draft" ? "secondary" :
-                      "outline"
-                    }>
-                      {report.status}
-                    </Badge>
-                    <Button variant="ghost" size="icon">
-                      <Download className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+      <Paper sx={{ height: 600 }}>
+        <DataGrid
+          rows={filteredReports}
+          columns={columns}
+          loading={loading.reports}
+          disableRowSelectionOnClick
+          getRowId={(row) => row.id}
+        />
+      </Paper>
+    </Box>
   )
 }

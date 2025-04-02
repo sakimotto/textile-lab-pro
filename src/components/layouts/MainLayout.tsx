@@ -22,6 +22,8 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import NavMenu from './NavMenu';
 import { useThemeContext } from '@/components/providers/ThemeContext';
+import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Dashboard, Science, People, Settings, Assessment, Description } from '@mui/icons-material';
 
 const drawerWidth = 240;
 
@@ -217,6 +219,24 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         </DrawerHeader>
         <Divider />
         <NavMenu open={open} />
+        <List>
+          <ListItem button component="a" href="/dashboard">
+            <ListItemIcon><Dashboard /></ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+          <ListItem button component="a" href="/samples">
+            <ListItemIcon><Science /></ListItemIcon>
+            <ListItemText primary="Samples" />
+          </ListItem>
+          <ListItem button component="a" href="/clients">
+            <ListItemIcon><People /></ListItemIcon>
+            <ListItemText primary="Clients" />
+          </ListItem>
+          <ListItem button component="a" href="/reports">
+            <ListItemIcon><Description /></ListItemIcon>
+            <ListItemText primary="Reports" />
+          </ListItem>
+        </List>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />

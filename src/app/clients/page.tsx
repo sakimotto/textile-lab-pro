@@ -1,18 +1,11 @@
 'use client'
 
-import { useState } from 'react'
-import { ColumnDef } from '@tanstack/react-table'
-import { MoreHorizontal, Plus } from 'lucide-react'
-import { DataTable } from '@/components/ui/data-table'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+import { useEffect, useState } from 'react'
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { Box, Button, Card, CardContent, CardHeader, Dialog, DialogTitle, DialogContent, IconButton, TextField, Chip } from '@mui/material'
+import { Add as AddIcon, Search as SearchIcon, MoreVert as MoreVertIcon } from '@mui/icons-material'
+import { useStore } from '@/lib/store'
+import { ClientForm } from '@/components/clients/client-form'
 
 interface Client {
   id: string
@@ -24,160 +17,152 @@ interface Client {
   status: 'Active' | 'Inactive'
 }
 
-const columns: ColumnDef<Client>[] = [
-  {
-    accessorKey: 'name',
-    header: 'Company Name',
-  },
-  {
-    accessorKey: 'contactPerson',
-    header: 'Contact Person',
-  },
-  {
-    accessorKey: 'email',
-    header: 'Email',
-  },
-  {
-    accessorKey: 'phone',
-    header: 'Phone',
-  },
-  {
-    accessorKey: 'activeTests',
-    header: 'Active Tests',
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => {
-      const status = row.getValue('status') as string
-      return (
-        <span
-          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-            status === 'Active'
-              ? 'bg-green-100 text-green-800'
-              : 'bg-gray-100 text-gray-800'
-          }`}
-        >
-          {status}
-        </span>
-      )
-    },
-  },
-  {
-    id: 'actions',
-    cell: ({ row }) => {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>View Details</DropdownMenuItem>
-            <DropdownMenuItem>Edit Client</DropdownMenuItem>
-            <DropdownMenuItem>View Tests</DropdownMenuItem>
-            <DropdownMenuItem>View Reports</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
-  },
-]
-
-const data: Client[] = [
-  {
-    id: '1',
-    name: 'FashionCo Industries',
-    contactPerson: 'John Smith',
-    email: 'john.smith@fashionco.com',
-    phone: '+1 234-567-8901',
-    activeTests: 3,
-    status: 'Active',
-  },
-  {
-    id: '2',
-    name: 'Textile Innovations Ltd',
-    contactPerson: 'Sarah Johnson',
-    email: 'sarah.j@textileinnovations.com',
-    phone: '+1 234-567-8902',
-    activeTests: 1,
-    status: 'Active',
-  },
-  {
-    id: '3',
-    name: 'EcoFabrics Co',
-    contactPerson: 'Michael Brown',
-    email: 'm.brown@ecofabrics.com',
-    phone: '+1 234-567-8903',
-    activeTests: 0,
-    status: 'Inactive',
-  },
-  {
-    id: '4',
-    name: 'SportsTex International',
-    contactPerson: 'Emma Wilson',
-    email: 'emma.w@sportstex.com',
-    phone: '+1 234-567-8904',
-    activeTests: 2,
-    status: 'Active',
-  },
-]
+type ClientFormData = Omit<Client, 'id' | 'activeTests'> & {
+  activeTests?: number
+}
 
 export default function ClientsPage() {
-  const [clients] = useState<Client[]>(data)
+  const { clients, loading, fetchClients, addClient, updateClient, deleteClient } = useStore()
+  const [searchTerm, setSearchTerm] = useState('')
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null)
+
+  useEffect(() => {
+    fetchClients()
+  }, [fetchClients])
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term)
+  }
+
+  const handleAddClient = async (formData: ClientFormData) => {
+    const clientData = {
+      ...formData,
+      activeTests: formData.activeTests || 0,
+    }
+    
+    if (selectedClient) {
+      await updateClient(selectedClient.id, clientData)
+    } else {
+      await addClient(clientData)
+    }
+    setIsDialogOpen(false)
+  }
+
+  const handleOpenDialog = (client: Client | null) => {
+    setSelectedClient(client)
+    setIsDialogOpen(true)
+  }
+
+  const columns: GridColDef[] = [
+    { field: 'name', headerName: 'Company Name', flex: 1 },
+    { field: 'contactPerson', headerName: 'Contact Person', flex: 1 },
+    { field: 'email', headerName: 'Email', flex: 1 },
+    { field: 'phone', headerName: 'Phone', flex: 1 },
+    { field: 'activeTests', headerName: 'Active Tests', width: 120 },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 130,
+      renderCell: (params) => (
+        <Chip
+          label={params.value}
+          color={params.value === 'Active' ? 'success' : 'default'}
+          size="small"
+        />
+      ),
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      sortable: false,
+      renderCell: (params) => (
+        <IconButton
+          onClick={(e) => {
+            e.stopPropagation()
+            handleOpenDialog(params.row)
+          }}
+        >
+          <MoreVertIcon />
+        </IconButton>
+      ),
+    },
+  ]
+
+  const filteredClients = Array.isArray(clients)
+    ? clients.filter(client =>
+        Object.values(client).some(value =>
+          value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      )
+    : []
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Clients</h1>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
+    <Box sx={{ p: 3 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <TextField
+            placeholder="Search clients..."
+            value={searchTerm}
+            onChange={(e) => handleSearch(e.target.value)}
+            variant="outlined"
+            size="small"
+            InputProps={{
+              startAdornment: <SearchIcon sx={{ mr: 1, color: 'text.secondary' }} />,
+            }}
+            sx={{ mr: 2 }}
+          />
+        </Box>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={() => handleOpenDialog(null)}
+        >
           Add Client
         </Button>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Total Clients</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">{clients.length}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Active Clients</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">
-              {clients.filter((c) => c.status === 'Active').length}
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Total Active Tests</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">
-              {clients.reduce((sum, client) => sum + client.activeTests, 0)}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      </Box>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Client List</CardTitle>
-        </CardHeader>
+        <CardHeader title="Client List" />
         <CardContent>
-          <DataTable columns={columns} data={clients} searchColumn="name" />
+          <DataGrid
+            rows={filteredClients}
+            columns={columns}
+            loading={loading.clients}
+            autoHeight
+            disableRowSelectionOnClick
+            pageSizeOptions={[5, 10, 25, 50]}
+            initialState={{
+              pagination: { paginationModel: { pageSize: 10 } },
+            }}
+          />
         </CardContent>
       </Card>
-    </div>
+
+      <Dialog
+        open={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          {selectedClient ? 'Edit Client' : 'Add New Client'}
+        </DialogTitle>
+        <DialogContent>
+          <ClientForm
+            initialData={selectedClient ? {
+              name: selectedClient.name,
+              contactPerson: selectedClient.contactPerson,
+              email: selectedClient.email,
+              phone: selectedClient.phone,
+              status: selectedClient.status,
+            } : undefined}
+            onSubmit={handleAddClient}
+            onCancel={() => setIsDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
+    </Box>
   )
 }
