@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Method Builder - Textile Testing Laboratory</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>Textile Testing Laboratory</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Dashboard</a>
+                <a href="test-method-builder.html" class="active">Test Methods</a>
+                <a href="calendar.html">Calendar</a>
+                <a href="equipment.html">Equipment</a>
+                <a href="chatbot.html">AI Assistant</a>
+            </div>
+            <div class="user-menu">
+                <button class="icon-button">
+                    <i class="fa fa-notifications"></i>
+                </button>
+                <div class="user-avatar">JS</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <i class="fa fa-dashboard"></i>
+                    Dashboard
+                </li>
+                <li class="sidebar-item active">
+                    <i class="fa fa-test"></i>
+                    Test Methods
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-calendar"></i>
+                    Calendar
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-equipment"></i>
+                    Equipment
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-chat"></i>
+                    AI Assistant
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-reports"></i>
+                    Reports
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-settings"></i>
+                    Settings
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1>Test Method Builder</h1>
+                    <div>
+                        <button class="btn btn-secondary mr-2">
+                            <i class="fa fa-test"></i>
+                            Load Template
+                        </button>
+                        <button class="btn btn-primary">
+                            <i class="fa fa-test"></i>
+                            Save Method
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h2 class="card-title">Method Information</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Method Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter method name" value="Abrasion Resistance Test - Automotive Fabrics">
+                                </div>
+                            </div>
+                            <div class="col col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Industry</label>
+                                    <select class="form-control">
+                                        <option>Select industry</option>
+                                        <option selected>Automotive</option>
+                                        <option>Sportswear</option>
+                                        <option>Camping</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Compliance Standard</label>
+                                    <select class="form-control">
+                                        <option>Select standard</option>
+                                        <option selected>ASTM D4966</option>
+                                        <option>ISO 12947-2</option>
+                                        <option>EN ISO 5470-2</option>
+                                        <option>Custom</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Version</label>
+                                    <input type="text" class="form-control" placeholder="Version" value="1.0">
+                                </div>
+                            </div>
+                            <div class="col col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter method description">Test method for determining the abrasion resistance of automotive seat fabrics using the Martindale method. This test evaluates the fabric's durability under simulated wear conditions.</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Test Method Builder</h2>
+                        <span class="card-subtitle">Drag parameters from the left panel to build your test method</span>
+                    </div>
+                    <div class="card-content p-0">
+                        <div class="builder-container">
+                            <div class="builder-sidebar">
+                                <h3>Parameters</h3>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Search parameters">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <h4>Environmental Parameters</h4>
+                                    <div class="parameter-item" draggable="true">
+                                        <strong>Temperature</strong>
+                                        <div class="text-muted">Control ambient temperature</div>
+                                    </div>
+                                    <div class="parameter-item" draggable="true">
+                                        <strong>Humidity</strong>
+                                        <div class="text-muted">Control relative humidity</div>
+                                    </div>
+                                    <div class="parameter-item" draggable="true">
+                                        <strong>Light Exposure</strong>
+                                        <div class="text-muted">Control UV light exposure</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <h4>Mechanical Parameters</h4>
+                                    <div class="parameter-item" draggable="true">
+                                        <strong>Pressure</strong>
+                                        <div class="text-muted">Apply specific pressure</div>
+                                    </div>
+                                    <div class="parameter-item" draggable="true">
+                                        <strong>Cycles</strong>
+                                        <div class="text-muted">Number of abrasion cycles</div>
+                                    </div>
+                                    <div class="parameter-item" draggable="true">
+                                        <strong>Speed</strong>
+                                        <div class="text-muted">Movement speed</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <h4>Time Parameters</h4>
+                                    <div class="parameter-item" draggable="true">
+                                        <strong>Duration</strong>
+                                        <div class="text-muted">Test duration</div>
+                                    </div>
+                                    <div class="parameter-item" draggable="true">
+                                        <strong>Intervals</strong>
+                                        <div class="text-muted">Inspection intervals</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="builder-workspace">
+                                <h3>Test Sequence</h3>
+                                <p>Drag parameters here to build your test method</p>
+                                
+                                <div class="workspace-item">
+                                    <strong>Sample Preparation</strong>
+                                    <div>Cut fabric samples into 38mm diameter circles</div>
+                                    <button class="btn btn-danger btn-sm" style="position: absolute; right: 10px; top: 10px;">Remove</button>
+                                </div>
+                                
+                                <div class="workspace-item">
+                                    <strong>Temperature</strong>
+                                    <div>Set ambient temperature to 23°C ± 2°C</div>
+                                    <button class="btn btn-danger btn-sm" style="position: absolute; right: 10px; top: 10px;">Remove</button>
+                                </div>
+                                
+                                <div class="workspace-item">
+                                    <strong>Humidity</strong>
+                                    <div>Set relative humidity to 50% ± 5%</div>
+                                    <button class="btn btn-danger btn-sm" style="position: absolute; right: 10px; top: 10px;">Remove</button>
+                                </div>
+                                
+                                <div class="workspace-item">
+                                    <strong>Pressure</strong>
+                                    <div>Apply 12 kPa pressure using standard weight</div>
+                                    <button class="btn btn-danger btn-sm" style="position: absolute; right: 10px; top: 10px;">Remove</button>
+                                </div>
+                                
+                                <div class="workspace-item">
+                                    <strong>Cycles</strong>
+                                    <div>Run for 20,000 cycles or until fabric failure</div>
+                                    <button class="btn btn-danger btn-sm" style="position: absolute; right: 10px; top: 10px;">Remove</button>
+                                </div>
+                                
+                                <div class="workspace-item">
+                                    <strong>Intervals</strong>
+                                    <div>Inspect samples at 5,000, 10,000, 15,000, and 20,000 cycles</div>
+                                    <button class="btn btn-danger btn-sm" style="position: absolute; right: 10px; top: 10px;">Remove</button>
+                                </div>
+                            </div>
+                            
+                            <div class="builder-properties">
+                                <h3>Properties</h3>
+                                <p>Select a parameter to edit its properties</p>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Parameter Name</label>
+                                    <input type="text" class="form-control" value="Cycles" disabled>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Value</label>
+                                    <input type="text" class="form-control" value="20,000">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Unit</label>
+                                    <select class="form-control">
+                                        <option>Select unit</option>
+                                        <option selected>cycles</option>
+                                        <option>rotations</option>
+                                        <option>movements</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Condition</label>
+                                    <select class="form-control">
+                                        <option>None</option>
+                                        <option selected>Or until fabric failure</option>
+                                        <option>Or until color change</option>
+                                        <option>Custom condition</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Notes</label>
+                                    <textarea class="form-control" rows="3">Standard cycle count for automotive fabrics according to ASTM D4966.</textarea>
+                                </div>
+                                
+                                <button class="btn btn-primary w-100">Apply Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

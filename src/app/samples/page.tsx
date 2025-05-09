@@ -3,14 +3,24 @@
 import { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { Box, Button, Card, CardContent, CardHeader, Dialog, DialogTitle, DialogContent, IconButton, TextField, Chip } from '@mui/material'
-import { Add as AddIcon, Search as SearchIcon, MoreVert as MoreVertIcon } from '@mui/icons-material'
+import { Add as AddIcon, Search as SearchIcon, MoreVert as MoreVertIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material'
 import { useStore } from '@/lib/store'
 import SampleSubmissionForm, { SampleFormData } from '@/components/samples/SampleSubmissionForm'
 
+// Full sample interface that matches what's expected by the store
 interface Sample extends SampleFormData {
   id: string
   submissionDate: string
 }
+
+// Export SampleFormData so it can be reused elsewhere
+export { SampleFormData }
+
+// Type for adding a new sample (omits id which is generated)
+type NewSample = Omit<Sample, 'id'>
+
+// Mock type to match what the store expects (if we don't have access to store.ts)
+type StoreAddSampleParam = SampleFormData & { submissionDate: string }
 
 export default function SamplesPage() {
   const { samples, loading, fetchSamples, addSample, updateSample, deleteSample } = useStore()
@@ -28,15 +38,27 @@ export default function SamplesPage() {
 
   const handleAddSample = async (formData: SampleFormData) => {
     if (selectedSample) {
-      await updateSample(selectedSample.id, {
-        ...formData,
-        submissionDate: selectedSample.submissionDate,
-      } as Sample)
+      // Update existing sample
+      try {
+        await updateSample(selectedSample.id, {
+          ...formData,
+          submissionDate: selectedSample.submissionDate,
+        } as Sample)
+      } catch (error) {
+        console.error('Error updating sample:', error)
+        // You can add a UI alert here, e.g., set an error state
+      }
     } else {
-      await addSample({
-        ...formData,
-        submissionDate: new Date().toISOString(),
-      } as Sample)
+      // Create a new sample with required fields
+      try {
+        await addSample({
+          ...formData,
+          submissionDate: new Date().toISOString(),
+        } as StoreAddSampleParam)
+      } catch (error) {
+        console.error('Error adding sample:', error)
+        // You can add a UI alert here, e.g., set an error state
+      }
     }
     setIsDialogOpen(false)
   }
@@ -44,6 +66,15 @@ export default function SamplesPage() {
   const handleOpenDialog = (sample: Sample | null) => {
     setSelectedSample(sample)
     setIsDialogOpen(true)
+  }
+
+  const handleDeleteSample = async (id: string) => {
+    try {
+      await deleteSample(id)
+    } catch (error) {
+      console.error('Error deleting sample:', error)
+      // Handle error, e.g., show a message
+    }
   }
 
   const getStatusColor = (status: string) => {
@@ -79,16 +110,16 @@ export default function SamplesPage() {
     {
       field: 'actions',
       headerName: 'Actions',
-      width: 100,
+      width: 150,
       renderCell: (params) => (
-        <IconButton
-          onClick={(e) => {
-            e.stopPropagation()
-            handleOpenDialog(params.row)
-          }}
-        >
-          <MoreVertIcon />
-        </IconButton>
+        <>
+          <IconButton onClick={() => handleOpenDialog(params.row)}>
+            <EditIcon />
+          </IconButton>
+          <IconButton onClick={() => handleDeleteSample(params.row.id)}>
+            <DeleteIcon />
+          </IconButton>
+        </>
       ),
     },
   ]

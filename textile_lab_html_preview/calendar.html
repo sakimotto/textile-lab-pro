@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - Textile Testing Laboratory</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>Textile Testing Laboratory</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Dashboard</a>
+                <a href="test-method-builder.html">Test Methods</a>
+                <a href="calendar.html" class="active">Calendar</a>
+                <a href="equipment.html">Equipment</a>
+                <a href="chatbot.html">AI Assistant</a>
+            </div>
+            <div class="user-menu">
+                <button class="icon-button">
+                    <i class="fa fa-notifications"></i>
+                </button>
+                <div class="user-avatar">JS</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <i class="fa fa-dashboard"></i>
+                    Dashboard
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-test"></i>
+                    Test Methods
+                </li>
+                <li class="sidebar-item active">
+                    <i class="fa fa-calendar"></i>
+                    Calendar
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-equipment"></i>
+                    Equipment
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-chat"></i>
+                    AI Assistant
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-reports"></i>
+                    Reports
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-settings"></i>
+                    Settings
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1>Test Calendar</h1>
+                    <div>
+                        <button class="btn btn-secondary mr-2">
+                            <i class="fa fa-refresh"></i>
+                            Refresh
+                        </button>
+                        <button class="btn btn-primary">
+                            <i class="fa fa-calendar"></i>
+                            New Test
+                        </button>
+                    </div>
+                </div>
+
+                <div class="calendar-container">
+                    <div class="calendar-sidebar">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h2 class="card-title">Filters</h2>
+                            </div>
+                            <div class="card-content">
+                                <div class="form-group">
+                                    <label class="form-label">Industry</label>
+                                    <div>
+                                        <label style="display: block; margin-bottom: 8px;">
+                                            <input type="checkbox" checked> Automotive
+                                        </label>
+                                        <label style="display: block; margin-bottom: 8px;">
+                                            <input type="checkbox" checked> Sportswear
+                                        </label>
+                                        <label style="display: block;">
+                                            <input type="checkbox" checked> Camping
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Equipment</label>
+                                    <div>
+                                        <label style="display: block; margin-bottom: 8px;">
+                                            <input type="checkbox" checked> Instron 5967
+                                        </label>
+                                        <label style="display: block; margin-bottom: 8px;">
+                                            <input type="checkbox" checked> SDL Atlas MM
+                                        </label>
+                                        <label style="display: block; margin-bottom: 8px;">
+                                            <input type="checkbox" checked> MESDAN LAB
+                                        </label>
+                                        <label style="display: block; margin-bottom: 8px;">
+                                            <input type="checkbox" checked> Instron 5966
+                                        </label>
+                                        <label style="display: block;">
+                                            <input type="checkbox" checked> SDL Atlas CM
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Technician</label>
+                                    <div>
+                                        <label style="display: block; margin-bottom: 8px;">
+                                            <input type="checkbox" checked> John Smith
+                                        </label>
+                                        <label style="display: block; margin-bottom: 8px;">
+                                            <input type="checkbox" checked> Emily Johnson
+                                        </label>
+                                        <label style="display: block; margin-bottom: 8px;">
+                                            <input type="checkbox" checked> Michael Chen
+                                        </label>
+                                        <label style="display: block;">
+                                            <input type="checkbox" checked> Sarah Williams
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn btn-primary w-100">Apply Filters</button>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">Upcoming Tests</h2>
+                            </div>
+                            <div class="card-content p-0">
+                                <ul style="list-style: none; padding: 0; margin: 0;">
+                                    <li style="padding: 10px 15px; border-bottom: 1px solid #eee;">
+                                        <div style="font-weight: 500;">Abrasion Resistance Test</div>
+                                        <div style="font-size: 0.8rem; color: #757575;">Today, 10:00 AM</div>
+                                        <div style="font-size: 0.8rem;">SDL Atlas MM • John Smith</div>
+                                        <span class="badge" style="background-color: #ff9800; color: white;">High</span>
+                                    </li>
+                                    <li style="padding: 10px 15px; border-bottom: 1px solid #eee;">
+                                        <div style="font-weight: 500;">UV Resistance Test</div>
+                                        <div style="font-size: 0.8rem; color: #757575;">Today, 1:30 PM</div>
+                                        <div style="font-size: 0.8rem;">MESDAN LAB • Emily Johnson</div>
+                                        <span class="badge" style="background-color: #2196f3; color: white;">Medium</span>
+                                    </li>
+                                    <li style="padding: 10px 15px; border-bottom: 1px solid #eee;">
+                                        <div style="font-weight: 500;">Tensile Strength Test</div>
+                                        <div style="font-size: 0.8rem; color: #757575;">Tomorrow, 9:15 AM</div>
+                                        <div style="font-size: 0.8rem;">Instron 5967 • Michael Chen</div>
+                                        <span class="badge" style="background-color: #ff9800; color: white;">High</span>
+                                    </li>
+                                    <li style="padding: 10px 15px; border-bottom: 1px solid #eee;">
+                                        <div style="font-weight: 500;">Moisture Wicking Test</div>
+                                        <div style="font-size: 0.8rem; color: #757575;">Tomorrow, 2:00 PM</div>
+                                        <div style="font-size: 0.8rem;">SDL Atlas CM • Sarah Williams</div>
+                                        <span class="badge" style="background-color: #2196f3; color: white;">Medium</span>
+                                    </li>
+                                    <li style="padding: 10px 15px;">
+                                        <div style="font-weight: 500;">Flammability Test</div>
+                                        <div style="font-size: 0.8rem; color: #757575;">Apr 3, 11:30 AM</div>
+                                        <div style="font-size: 0.8rem;">MESDAN LAB • John Smith</div>
+                                        <span class="badge" style="background-color: #f44336; color: white;">Critical</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-main">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="calendar-header">
+                                    <div>
+                                        <button class="btn btn-secondary">
+                                            <i class="fa fa-calendar"></i>
+                                            Previous
+                                        </button>
+                                    </div>
+                                    <h2 style="margin: 0;">April 2025</h2>
+                                    <div>
+                                        <button class="btn btn-secondary">
+                                            <i class="fa fa-calendar"></i>
+                                            Next
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="tabs mt-3">
+                                    <div class="tab active" data-target="month-view">Month</div>
+                                    <div class="tab" data-target="week-view">Week</div>
+                                    <div class="tab" data-target="day-view">Day</div>
+                                    <div class="tab" data-target="list-view">List</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div id="month-view" class="tab-content active">
+                                    <div class="calendar-grid">
+                                        <!-- Calendar days will be generated by JavaScript -->
+                                    </div>
+                                </div>
+                                
+                                <div id="week-view" class="tab-content">
+                                    <h3>Week View</h3>
+                                    <p>Week view would display a detailed schedule for the current week.</p>
+                                </div>
+                                
+                                <div id="day-view" class="tab-content">
+                                    <h3>Day View</h3>
+                                    <p>Day view would display a detailed schedule for the selected day.</p>
+                                </div>
+                                
+                                <div id="list-view" class="tab-content">
+                                    <h3>List View</h3>
+                                    <p>List view would display all scheduled tests in a chronological list.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Test Details Modal (would be shown when clicking on a calendar event) -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h2 class="card-title">Test Details</h2>
+                        <span class="card-subtitle">Sample view of test details when clicking a calendar event</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Test Name</label>
+                                    <input type="text" class="form-control" value="Abrasion Resistance Test - Automotive Seat Fabric" readonly>
+                                </div>
+                            </div>
+                            <div class="col col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Date & Time</label>
+                                    <input type="text" class="form-control" value="April 2, 2025 10:00 AM" readonly>
+                                </div>
+                            </div>
+                            <div class="col col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Equipment</label>
+                                    <input type="text" class="form-control" value="SDL Atlas MM" readonly>
+                                </div>
+                            </div>
+                            <div class="col col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Technician</label>
+                                    <input type="text" class="form-control" value="John Smith" readonly>
+                                </div>
+                            </div>
+                            <div class="col col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Industry</label>
+                                    <input type="text" class="form-control" value="Automotive" readonly>
+                                </div>
+                            </div>
+                            <div class="col col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Priority</label>
+                                    <input type="text" class="form-control" value="High" readonly>
+                                </div>
+                            </div>
+                            <div class="col col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Test Method</label>
+                                    <input type="text" class="form-control" value="ASTM D4966 - Martindale Abrasion Resistance" readonly>
+                                </div>
+                            </div>
+                            <div class="col col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Sample Information</label>
+                                    <textarea class="form-control" rows="3" readonly>Sample ID: A-2025-0402-01
+Material: Polyester/Cotton Blend
+Client: Automotive Interiors Inc.
+Quantity: 5 specimens</textarea>
+                                </div>
+                            </div>
+                            <div class="col col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Status</label>
+                                    <select class="form-control">
+                                        <option>Scheduled</option>
+                                        <option>In Progress</option>
+                                        <option>Completed</option>
+                                        <option>Cancelled</option>
+                                        <option>On Hold</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col col-12">
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-secondary mr-2">Cancel</button>
+                                    <button class="btn btn-primary">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

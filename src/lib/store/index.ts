@@ -37,6 +37,19 @@ interface Report {
   name: string
   type: string
   status: string
+  testIds: string[]
+  generatedDate: string
+}
+
+interface Equipment {
+  isOperational: boolean
+  lastCalibrated: string
+}
+
+interface Queue {
+  count: number
+  progress: number
+  averageProcessingHours: number
 }
 
 interface AppState {
@@ -49,6 +62,8 @@ interface AppState {
   samples: Sample[]
   tests: Test[]
   reports: Report[]
+  equipment: Equipment
+  queue: Queue
   
   // Loading States
   loading: {
@@ -98,14 +113,90 @@ interface AppState {
 export const useStore = create<AppState>()(
   devtools(
     persist(
-      (set) => ({
+      (set, get) => ({
         // Initial State
         theme: 'light',
         sidebarOpen: true,
-        clients: [],
-        samples: [],
+        
+        // Initialize with mock data for development
+        clients: [
+          { id: '1', name: 'DenimCo', contactPerson: 'John Doe', email: 'john@denimco.com', phone: '123-456-7890', activeTests: 2, status: 'Active' },
+          { id: '2', name: 'TechWear', contactPerson: 'Jane Smith', email: 'jane@techwear.com', phone: '098-765-4321', activeTests: 3, status: 'Active' },
+          { id: '3', name: 'SustainableFabrics', contactPerson: 'Emma Green', email: 'emma@sustainablefabrics.com', phone: '555-123-4567', activeTests: 1, status: 'Active' },
+          { id: '4', name: 'SafetyFirst', contactPerson: 'Robert Shield', email: 'robert@safetyfirst.com', phone: '888-555-1212', activeTests: 1, status: 'Active' },
+          { id: '5', name: 'FashionForward', contactPerson: 'Sophia Style', email: 'sophia@fashionforward.com', phone: '777-888-9999', activeTests: 1, status: 'Active' },
+          { id: '6', name: 'LuxuryTextiles', contactPerson: 'Alexander Silk', email: 'alex@luxurytextiles.com', phone: '444-333-2222', activeTests: 1, status: 'Active' },
+        ],
+        samples: [
+          {
+            id: 'S001',
+            name: 'Cotton Twill - Blue',
+            clientName: 'DenimCo',
+            type: 'Fabric',
+            submissionDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'In Testing'
+          },
+          {
+            id: 'S002',
+            name: 'Polyester Blend - Black',
+            clientName: 'TechWear',
+            type: 'Fabric',
+            submissionDate: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'Pending'
+          },
+          {
+            id: 'S003',
+            name: 'Linen - Natural',
+            clientName: 'SustainableFabrics',
+            type: 'Fabric',
+            submissionDate: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'Completed'
+          },
+          {
+            id: 'S004',
+            name: 'Nylon - Fire Retardant',
+            clientName: 'SafetyFirst',
+            type: 'Fabric',
+            submissionDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'Failed'
+          },
+          {
+            id: 'S005',
+            name: 'Cotton Jersey - Striped',
+            clientName: 'FashionForward',
+            type: 'Fabric',
+            submissionDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'In Testing'
+          },
+          {
+            id: 'S006',
+            name: 'Silk - Printed',
+            clientName: 'LuxuryTextiles',
+            type: 'Fabric',
+            submissionDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'Pending'
+          }
+        ],
         tests: [],
-        reports: [],
+        reports: [
+          {
+            id: '1',
+            name: 'Colorfastness Report',
+            type: 'Colorfastness',
+            status: 'Draft',
+            testIds: ['1', '2'],
+            generatedDate: new Date().toISOString()
+          }
+        ],
+        equipment: {
+          isOperational: true,
+          lastCalibrated: new Date().toISOString()
+        },
+        queue: {
+          count: 12,
+          progress: 65,
+          averageProcessingHours: 24
+        },
         loading: {
           clients: false,
           samples: false,
@@ -232,16 +323,84 @@ export const useStore = create<AppState>()(
         
         // Test Actions
         fetchTests: async () => {
+          console.log('[DEBUG] Using mock test data');
           try {
-            set((state) => ({ loading: { ...state.loading, tests: true } }))
-            const response = await testsApi.getAll()
-            set({ tests: response.data })
-          } catch (err) {
-            const error = err as Error
-            set((state) => ({ error: { ...state.error, tests: error.message } }))
-            console.error('Error fetching tests:', error)
-          } finally {
-            set((state) => ({ loading: { ...state.loading, tests: false } }))
+            set((state) => ({ loading: { ...state.loading, tests: true } }));
+            // Mock data that matches the Test interface
+            const mockTests = [
+              {
+                id: '1',
+                name: 'Colorfastness to Washing - ISO 105-C06',
+                sampleId: 'S001',
+                type: 'ColorFastness',
+                status: 'In Progress',
+                dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+                priority: 'High',
+                notes: 'Testing color retention after 5 wash cycles'
+              },
+              {
+                id: '2',
+                name: 'Abrasion Resistance - ASTM D4966',
+                sampleId: 'S002',
+                type: 'Abrasion',
+                status: 'Pending',
+                dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+                priority: 'Normal',
+                notes: 'Martindale method for abrasion resistance'
+              },
+              {
+                id: '3',
+                name: 'Tensile Strength - ISO 13934-1',
+                sampleId: 'S003',
+                type: 'Tensile',
+                status: 'Completed',
+                dueDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+                priority: 'Normal',
+                notes: 'Strip method for maximum force determination'
+              },
+              {
+                id: '4',
+                name: 'Flammability Test - 16 CFR 1610',
+                sampleId: 'S004',
+                type: 'Flammability',
+                status: 'Failed',
+                dueDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+                priority: 'Urgent',
+                notes: 'Standard test method for flammability of clothing textiles'
+              },
+              {
+                id: '5',
+                name: 'Dimensional Stability - ISO 5077',
+                sampleId: 'S005',
+                type: 'Dimensional',
+                status: 'In Progress',
+                dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+                priority: 'High',
+                notes: 'Testing for shrinkage after washing and drying'
+              },
+              {
+                id: '6',
+                name: 'Color Fastness to Light - ISO 105-B02',
+                sampleId: 'S006',
+                type: 'ColorFastness',
+                status: 'Pending',
+                dueDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(),
+                priority: 'Normal',
+                notes: 'Xenon arc fading lamp test'
+              }
+            ];
+            set({
+              tests: mockTests,
+              loading: { ...get().loading, tests: false },
+              error: { ...get().error, tests: null }
+            });
+            console.log('[DEBUG] Mock tests loaded:', mockTests);
+          } catch (error) {
+            set({
+              error: { ...get().error, tests: 'Failed to load tests' },
+              loading: { ...get().loading, tests: false }
+            });
+            console.error('[ERROR] Failed to load tests:', error);
           }
         },
         addTest: async (test) => {
@@ -290,16 +449,39 @@ export const useStore = create<AppState>()(
         
         // Report Actions
         fetchReports: async () => {
+          console.log('[DEBUG] Using mock report data');
           try {
-            set((state) => ({ loading: { ...state.loading, reports: true } }))
-            const response = await reportsApi.getAll()
-            set({ reports: response.data })
-          } catch (err) {
-            const error = err as Error
-            set((state) => ({ error: { ...state.error, reports: error.message } }))
-            console.error('Error fetching reports:', error)
-          } finally {
-            set((state) => ({ loading: { ...state.loading, reports: false } }))
+            set({ loading: { ...get().loading, reports: true } });
+            const mockReports = [
+              {
+                id: '1',
+                name: 'Quarterly Analysis Q1',
+                type: 'Quarterly',
+                status: 'Final',
+                testIds: ['1', '2'],
+                generatedDate: new Date().toISOString()
+              },
+              {
+                id: '2',
+                name: 'Compliance Report',
+                type: 'Compliance',
+                status: 'Draft',
+                testIds: ['1'],
+                generatedDate: new Date().toISOString()
+              }
+            ];
+            set({
+              reports: mockReports,
+              loading: { ...get().loading, reports: false },
+              error: { ...get().error, reports: null }
+            });
+            console.log('[DEBUG] Mock reports loaded:', mockReports);
+          } catch (error) {
+            set({
+              error: { ...get().error, reports: 'Failed to load reports' },
+              loading: { ...get().loading, reports: false }
+            });
+            console.error('[ERROR] Failed to load reports:', error);
           }
         },
         addReport: async (report) => {

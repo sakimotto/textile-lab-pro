@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Textile Testing Laboratory</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>Textile Testing Laboratory</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="active">Dashboard</a>
+                <a href="test-method-builder.html">Test Methods</a>
+                <a href="calendar.html">Calendar</a>
+                <a href="equipment.html">Equipment</a>
+                <a href="chatbot.html">AI Assistant</a>
+            </div>
+            <div class="user-menu">
+                <button class="icon-button">
+                    <i class="fa fa-notifications"></i>
+                </button>
+                <div class="user-avatar">JS</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item active">
+                    <i class="fa fa-dashboard"></i>
+                    Dashboard
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-test"></i>
+                    Test Methods
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-calendar"></i>
+                    Calendar
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-equipment"></i>
+                    Equipment
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-chat"></i>
+                    AI Assistant
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-reports"></i>
+                    Reports
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-settings"></i>
+                    Settings
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1>Laboratory Dashboard</h1>
+                    <div>
+                        <button class="btn btn-secondary mr-2">
+                            <i class="fa fa-refresh"></i>
+                            Refresh
+                        </button>
+                        <button class="btn btn-primary">
+                            <i class="fa fa-settings"></i>
+                            Customize
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tabs mb-4">
+                    <div class="tab active" data-target="overview-tab">Overview</div>
+                    <div class="tab" data-target="test-results-tab">Test Results</div>
+                    <div class="tab" data-target="equipment-tab">Equipment</div>
+                    <div class="tab" data-target="analytics-tab">Analytics</div>
+                </div>
+
+                <div id="overview-tab" class="tab-content active">
+                    <div class="row">
+                        <!-- Test Status -->
+                        <div class="col col-12 col-md-6 col-lg-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Test Status</h2>
+                                    <span class="card-subtitle">Current test distribution</span>
+                                </div>
+                                <div class="card-content">
+                                    <div class="chart-container" style="height: 250px;">
+                                        <canvas id="test-status-chart"></canvas>
+                                    </div>
+                                    <div class="d-flex justify-content-center mt-3">
+                                        <div class="d-flex align-items-center mx-2">
+                                            <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #4caf50; margin-right: 5px;"></div>
+                                            <span>Passed: 68</span>
+                                        </div>
+                                        <div class="d-flex align-items-center mx-2">
+                                            <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #f44336; margin-right: 5px;"></div>
+                                            <span>Failed: 12</span>
+                                        </div>
+                                        <div class="d-flex align-items-center mx-2">
+                                            <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #2196f3; margin-right: 5px;"></div>
+                                            <span>In Progress: 15</span>
+                                        </div>
+                                        <div class="d-flex align-items-center mx-2">
+                                            <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #ff9800; margin-right: 5px;"></div>
+                                            <span>Scheduled: 25</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Equipment Utilization -->
+                        <div class="col col-12 col-md-6 col-lg-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Equipment Utilization</h2>
+                                    <span class="card-subtitle">Last 30 days</span>
+                                </div>
+                                <div class="card-content">
+                                    <div class="chart-container" style="height: 250px;">
+                                        <canvas id="equipment-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Test Results Trend -->
+                        <div class="col col-12 col-lg-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Test Results Trend</h2>
+                                    <span class="card-subtitle">Pass rate by industry (last 7 days)</span>
+                                </div>
+                                <div class="card-content">
+                                    <div class="chart-container" style="height: 300px;">
+                                        <canvas id="results-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Alerts -->
+                        <div class="col col-12 col-md-6 col-lg-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Alerts & Notifications</h2>
+                                </div>
+                                <div class="card-content p-0">
+                                    <ul style="list-style: none; padding: 0; margin: 0; max-height: 300px; overflow-y: auto;">
+                                        <li style="padding: 10px 15px; border-bottom: 1px solid #eee;">
+                                            <div class="d-flex">
+                                                <div style="margin-right: 10px; color: #ff9800;">
+                                                    <i class="fa fa-notifications"></i>
+                                                </div>
+                                                <div>
+                                                    <div>Instron 5966 calibration due in 3 days</div>
+                                                    <div style="font-size: 0.8rem; color: #757575;">Calibration - Today, 8:15 AM</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li style="padding: 10px 15px; border-bottom: 1px solid #eee;">
+                                            <div class="d-flex">
+                                                <div style="margin-right: 10px; color: #2196f3;">
+                                                    <i class="fa fa-notifications"></i>
+                                                </div>
+                                                <div>
+                                                    <div>SDL Atlas MM scheduled maintenance tomorrow</div>
+                                                    <div style="font-size: 0.8rem; color: #757575;">Maintenance - Today, 8:30 AM</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li style="padding: 10px 15px; border-bottom: 1px solid #eee;">
+                                            <div class="d-flex">
+                                                <div style="margin-right: 10px; color: #f44336;">
+                                                    <i class="fa fa-notifications"></i>
+                                                </div>
+                                                <div>
+                                                    <div>Resource conflict detected for MESDAN LAB on Mar 31</div>
+                                                    <div style="font-size: 0.8rem; color: #757575;">Conflict - Today, 9:05 AM</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li style="padding: 10px 15px; border-bottom: 1px solid #eee;">
+                                            <div class="d-flex">
+                                                <div style="margin-right: 10px; color: #4caf50;">
+                                                    <i class="fa fa-notifications"></i>
+                                                </div>
+                                                <div>
+                                                    <div>Database backup completed successfully</div>
+                                                    <div style="font-size: 0.8rem; color: #757575;">System - Today, 9:15 AM</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li style="padding: 10px 15px;">
+                                            <div class="d-flex">
+                                                <div style="margin-right: 10px; color: #f44336;">
+                                                    <i class="fa fa-notifications"></i>
+                                                </div>
+                                                <div>
+                                                    <div>Abrasion test failed for sample #A-2023-45</div>
+                                                    <div style="font-size: 0.8rem; color: #757575;">Test - Today, 9:45 AM</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Upcoming Tests -->
+                        <div class="col col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Upcoming Tests</h2>
+                                    <button class="btn btn-secondary">
+                                        <i class="fa fa-calendar"></i>
+                                        View Calendar
+                                    </button>
+                                </div>
+                                <div class="card-content p-0">
+                                    <div style="overflow-x: auto;">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Test Name</th>
+                                                    <th>Date & Time</th>
+                                                    <th>Equipment</th>
+                                                    <th>Technician</th>
+                                                    <th>Priority</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Abrasion Resistance - Automotive Seat Fabric</td>
+                                                    <td>Mar 29, 2025 10:00 AM</td>
+                                                    <td>SDL Atlas MM</td>
+                                                    <td>John Smith</td>
+                                                    <td><span class="badge" style="background-color: #ff9800; color: white;">High</span></td>
+                                                    <td>Scheduled</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>UV Resistance - Camping Tent Material</td>
+                                                    <td>Mar 29, 2025 1:30 PM</td>
+                                                    <td>MESDAN LAB</td>
+                                                    <td>Emily Johnson</td>
+                                                    <td><span class="badge" style="background-color: #2196f3; color: white;">Medium</span></td>
+                                                    <td>Scheduled</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tensile Strength - Sportswear Elastic</td>
+                                                    <td>Mar 30, 2025 9:15 AM</td>
+                                                    <td>Instron 5967</td>
+                                                    <td>Michael Chen</td>
+                                                    <td><span class="badge" style="background-color: #ff9800; color: white;">High</span></td>
+                                                    <td>Scheduled</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Moisture Wicking - Performance Fabric</td>
+                                                    <td>Mar 30, 2025 2:00 PM</td>
+                                                    <td>SDL Atlas CM</td>
+                                                    <td>Sarah Williams</td>
+                                                    <td><span class="badge" style="background-color: #2196f3; color: white;">Medium</span></td>
+                                                    <td>Scheduled</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Flammability Test - Automotive Interior</td>
+                                                    <td>Mar 31, 2025 11:30 AM</td>
+                                                    <td>MESDAN LAB</td>
+                                                    <td>John Smith</td>
+                                                    <td><span class="badge" style="background-color: #f44336; color: white;">Critical</span></td>
+                                                    <td>Scheduled</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Industry KPIs -->
+                        <div class="col col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Industry KPIs</h2>
+                                    <span class="card-subtitle">Last 30 days</span>
+                                </div>
+                                <div class="card-content">
+                                    <div class="row">
+                                        <!-- Automotive KPI -->
+                                        <div class="col col-12 col-md-4">
+                                            <div class="card shadow-sm">
+                                                <div class="card-content">
+                                                    <h3>Automotive</h3>
+                                                    <div class="row">
+                                                        <div class="col col-6">
+                                                            <div class="text-muted">Total Tests</div>
+                                                            <div style="font-size: 1.5rem; font-weight: 500;">145</div>
+                                                        </div>
+                                                        <div class="col col-6">
+                                                            <div class="text-muted">Pass Rate</div>
+                                                            <div style="font-size: 1.5rem; font-weight: 500; color: #4caf50;">91%</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-3">
+                                                        <div class="text-muted mb-1">Test Results</div>
+                                                        <div style="height: 10px; background-color: #f5f5f5; border-radius: 5px; overflow: hidden;">
+                                                            <div style="width: 91%; height: 100%; background-color: #4caf50;"></div>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between mt-1">
+                                                            <div style="color: #4caf50;">132 Passed</div>
+                                                            <div style="color: #f44336;">13 Failed</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Sportswear KPI -->
+                                        <div class="col col-12 col-md-4">
+                                            <div class="card shadow-sm">
+                                                <div class="card-content">
+                                                    <h3>Sportswear</h3>
+                                                    <div class="row">
+                                                        <div class="col col-6">
+                                                            <div class="text-muted">Total Tests</div>
+                                                            <div style="font-size: 1.5rem; font-weight: 500;">128</div>
+                                                        </div>
+                                                        <div class="col col-6">
+                                                            <div class="text-muted">Pass Rate</div>
+                                                            <div style="font-size: 1.5rem; font-weight: 500; color: #ff9800;">87.5%</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-3">
+                                                        <div class="text-muted mb-1">Test Results</div>
+                                                        <div style="height: 10px; background-color: #f5f5f5; border-radius: 5px; overflow: hidden;">
+                                                            <div style="width: 87.5%; height: 100%; background-color: #ff9800;"></div>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between mt-1">
+                                                            <div style="color: #4caf50;">112 Passed</div>
+                                                            <div style="color: #f44336;">16 Failed</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Camping KPI -->
+                                        <div class="col col-12 col-md-4">
+                                            <div class="card shadow-sm">
+                                                <div class="card-content">
+                                                    <h3>Camping</h3>
+                                                    <div class="row">
+                                                        <div class="col col-6">
+                                                            <div class="text-muted">Total Tests</div>
+                                                            <div style="font-size: 1.5rem; font-weight: 500;">97</div>
+                                                        </div>
+                                                        <div class="col col-6">
+                                                            <div class="text-muted">Pass Rate</div>
+                                                            <div style="font-size: 1.5rem; font-weight: 500; color: #4caf50;">91.8%</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-3">
+                                                        <div class="text-muted mb-1">Test Results</div>
+                                                        <div style="height: 10px; background-color: #f5f5f5; border-radius: 5px; overflow: hidden;">
+                                                            <div style="width: 91.8%; height: 100%; background-color: #4caf50;"></div>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between mt-1">
+                                                            <div style="color: #4caf50;">89 Passed</div>
+                                                            <div style="color: #f44336;">8 Failed</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="test-results-tab" class="tab-content">
+                    <h2>Test Results Content</h2>
+                    <p>This tab would display detailed test results and analytics.</p>
+                </div>
+
+                <div id="equipment-tab" class="tab-content">
+                    <h2>Equipment Content</h2>
+                    <p>This tab would display equipment status and monitoring information.</p>
+                </div>
+
+                <div id="analytics-tab" class="tab-content">
+                    <h2>Analytics Content</h2>
+                    <p>This tab would display advanced analytics and reporting features.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

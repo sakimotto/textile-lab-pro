@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant - Textile Testing Laboratory</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>Textile Testing Laboratory</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Dashboard</a>
+                <a href="test-method-builder.html">Test Methods</a>
+                <a href="calendar.html">Calendar</a>
+                <a href="equipment.html">Equipment</a>
+                <a href="chatbot.html" class="active">AI Assistant</a>
+            </div>
+            <div class="user-menu">
+                <button class="icon-button">
+                    <i class="fa fa-notifications"></i>
+                </button>
+                <div class="user-avatar">JS</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <i class="fa fa-dashboard"></i>
+                    Dashboard
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-test"></i>
+                    Test Methods
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-calendar"></i>
+                    Calendar
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-equipment"></i>
+                    Equipment
+                </li>
+                <li class="sidebar-item active">
+                    <i class="fa fa-chat"></i>
+                    AI Assistant
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-reports"></i>
+                    Reports
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-settings"></i>
+                    Settings
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1>AI Laboratory Assistant</h1>
+                    <div>
+                        <button class="btn btn-secondary mr-2">
+                            <i class="fa fa-history"></i>
+                            History
+                        </button>
+                        <button class="btn btn-primary">
+                            <i class="fa fa-settings"></i>
+                            Settings
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-12 col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h2 class="card-title">AI Assistant</h2>
+                                <span class="card-subtitle">Ask questions about test methods, equipment, or procedures</span>
+                            </div>
+                            <div class="card-content p-0">
+                                <div class="chatbot-container">
+                                    <div class="chatbot-messages">
+                                        <div class="message message-bot">
+                                            Hello! I'm your textile testing assistant. How can I help you today?
+                                        </div>
+                                        <div class="message message-user">
+                                            I need help with setting up an abrasion test for automotive seat fabric.
+                                        </div>
+                                        <div class="message message-bot">
+                                            I can help you with that test method. For automotive seat fabrics, we typically use the Martindale abrasion test method (ASTM D4966). Would you like me to guide you through the setup process?
+                                        </div>
+                                        <div class="message message-user">
+                                            Yes, please. What equipment should I use?
+                                        </div>
+                                        <div class="message message-bot">
+                                            For the Martindale abrasion test, you should use the SDL Atlas MM equipment located in Lab Room 102. This equipment is currently available. The test requires:
+                                            
+                                            1. Circular fabric samples (38mm diameter)
+                                            2. Standard abradant fabric
+                                            3. 12 kPa pressure weights
+                                            4. Temperature of 23°C ± 2°C
+                                            5. Relative humidity of 50% ± 5%
+                                            
+                                            Would you like me to check if all supplies are available?
+                                        </div>
+                                        <div class="message message-user">
+                                            Yes, and how many cycles should I run for automotive fabric?
+                                        </div>
+                                        <div class="message message-bot">
+                                            For automotive seat fabrics, the standard test protocol requires 20,000 cycles with inspection intervals at 5,000, 10,000, 15,000, and 20,000 cycles. This is based on the ASTM D4966 standard.
+                                            
+                                            I've checked our inventory system, and all necessary supplies are available in Lab Room 102. The SDL Atlas MM equipment is currently available and was last calibrated on February 10, 2025.
+                                            
+                                            Would you like me to help you schedule this test?
+                                        </div>
+                                    </div>
+                                    <div class="chatbot-input">
+                                        <input type="text" placeholder="Type your message here..." class="form-control">
+                                        <button class="btn btn-primary">
+                                            <i class="fa fa-send"></i>
+                                            Send
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col col-12 col-lg-4">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h2 class="card-title">Quick Actions</h2>
+                            </div>
+                            <div class="card-content">
+                                <button class="btn btn-secondary w-100 mb-2">
+                                    <i class="fa fa-test"></i>
+                                    Find Test Method
+                                </button>
+                                <button class="btn btn-secondary w-100 mb-2">
+                                    <i class="fa fa-equipment"></i>
+                                    Check Equipment Status
+                                </button>
+                                <button class="btn btn-secondary w-100 mb-2">
+                                    <i class="fa fa-calendar"></i>
+                                    Schedule a Test
+                                </button>
+                                <button class="btn btn-secondary w-100 mb-2">
+                                    <i class="fa fa-reports"></i>
+                                    Generate Report
+                                </button>
+                                <button class="btn btn-secondary w-100">
+                                    <i class="fa fa-help"></i>
+                                    Troubleshooting Guide
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h2 class="card-title">Suggested Topics</h2>
+                            </div>
+                            <div class="card-content p-0">
+                                <ul style="list-style: none; padding: 0; margin: 0;">
+                                    <li style="padding: 10px 15px; border-bottom: 1px solid #eee; cursor: pointer;">
+                                        How to calibrate the Instron 5967?
+                                    </li>
+                                    <li style="padding: 10px 15px; border-bottom: 1px solid #eee; cursor: pointer;">
+                                        What are the ISO standards for sportswear testing?
+                                    </li>
+                                    <li style="padding: 10px 15px; border-bottom: 1px solid #eee; cursor: pointer;">
+                                        How to interpret abrasion test results?
+                                    </li>
+                                    <li style="padding: 10px 15px; border-bottom: 1px solid #eee; cursor: pointer;">
+                                        What's the procedure for UV resistance testing?
+                                    </li>
+                                    <li style="padding: 10px 15px; cursor: pointer;">
+                                        How to prepare samples for tensile testing?
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">Voice Commands</h2>
+                            </div>
+                            <div class="card-content">
+                                <p>You can use voice commands to interact with the AI Assistant. Click the microphone button and speak your question.</p>
+                                <button class="btn btn-primary w-100">
+                                    <i class="fa fa-microphone"></i>
+                                    Start Voice Command
+                                </button>
+                                <div class="mt-3">
+                                    <h4>Example Commands:</h4>
+                                    <ul>
+                                        <li>"Find abrasion test methods"</li>
+                                        <li>"Check SDL Atlas MM status"</li>
+                                        <li>"Schedule tensile test for tomorrow"</li>
+                                        <li>"Show me recent test results"</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h2 class="card-title">Knowledge Base</h2>
+                        <span class="card-subtitle">Search for information in our comprehensive knowledge base</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="mb-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for test methods, standards, or procedures...">
+                                <button class="btn btn-primary">
+                                    <i class="fa fa-search"></i>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <h3>Popular Categories</h3>
+                        <div class="row">
+                            <div class="col col-6 col-md-3 mb-3">
+                                <div class="card shadow-sm">
+                                    <div class="card-content text-center p-3">
+                                        <i class="fa fa-test" style="font-size: 32px; color: #2196f3;"></i>
+                                        <h4>Test Methods</h4>
+                                        <div>125 articles</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-md-3 mb-3">
+                                <div class="card shadow-sm">
+                                    <div class="card-content text-center p-3">
+                                        <i class="fa fa-equipment" style="font-size: 32px; color: #4caf50;"></i>
+                                        <h4>Equipment</h4>
+                                        <div>87 articles</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-md-3 mb-3">
+                                <div class="card shadow-sm">
+                                    <div class="card-content text-center p-3">
+                                        <i class="fa fa-standard" style="font-size: 32px; color: #ff9800;"></i>
+                                        <h4>Standards</h4>
+                                        <div>203 articles</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-md-3 mb-3">
+                                <div class="card shadow-sm">
+                                    <div class="card-content text-center p-3">
+                                        <i class="fa fa-troubleshoot" style="font-size: 32px; color: #f44336;"></i>
+                                        <h4>Troubleshooting</h4>
+                                        <div>64 articles</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3>Recently Updated</h3>
+                        <div class="row">
+                            <div class="col col-12 col-md-6">
+                                <ul style="list-style: none; padding-left: 0;">
+                                    <li style="margin-bottom: 10px;">
+                                        <a href="#" style="text-decoration: none; color: #2196f3;">Updated ISO 12947-2 Standard for Martindale Abrasion Testing</a>
+                                        <div style="font-size: 0.8rem; color: #757575;">Updated 2 days ago</div>
+                                    </li>
+                                    <li style="margin-bottom: 10px;">
+                                        <a href="#" style="text-decoration: none; color: #2196f3;">New Calibration Procedure for SDL Atlas Color Measurement Equipment</a>
+                                        <div style="font-size: 0.8rem; color: #757575;">Updated 5 days ago</div>
+                                    </li>
+                                    <li>
+                                        <a href="#" style="text-decoration: none; color: #2196f3;">Troubleshooting Guide for Instron 5967 Error Codes</a>
+                                        <div style="font-size: 0.8rem; color: #757575;">Updated 1 week ago</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col col-12 col-md-6">
+                                <ul style="list-style: none; padding-left: 0;">
+                                    <li style="margin-bottom: 10px;">
+                                        <a href="#" style="text-decoration: none; color: #2196f3;">Sample Preparation Guidelines for UV Resistance Testing</a>
+                                        <div style="font-size: 0.8rem; color: #757575;">Updated 1 week ago</div>
+                                    </li>
+                                    <li style="margin-bottom: 10px;">
+                                        <a href="#" style="text-decoration: none; color: #2196f3;">REACH Compliance Requirements for Textile Testing</a>
+                                        <div style="font-size: 0.8rem; color: #757575;">Updated 2 weeks ago</div>
+                                    </li>
+                                    <li>
+                                        <a href="#" style="text-decoration: none; color: #2196f3;">Best Practices for Moisture Wicking Test Data Analysis</a>
+                                        <div style="font-size: 0.8rem; color: #757575;">Updated 2 weeks ago</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

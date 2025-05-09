@@ -16,10 +16,15 @@ interface NavMenuProps {
   open: boolean;
 }
 
+import ChecklistIcon from '@mui/icons-material/Checklist';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+
 const navItems = [
   { text: 'Dashboard', icon: <DashboardIcon />, href: '/' },
   { text: 'Tests', icon: <ScienceIcon />, href: '/tests' },
+  { text: 'Test Standards', icon: <MenuBookIcon />, href: '/test-standards' },
   { text: 'Reports', icon: <AssessmentIcon />, href: '/reports' },
+  { text: 'Tasks', icon: <ChecklistIcon />, href: '/tasks' },
   { text: 'Settings', icon: <SettingsIcon />, href: '/settings' },
 ];
 

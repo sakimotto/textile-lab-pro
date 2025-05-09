@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment - Textile Testing Laboratory</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>Textile Testing Laboratory</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Dashboard</a>
+                <a href="test-method-builder.html">Test Methods</a>
+                <a href="calendar.html">Calendar</a>
+                <a href="equipment.html" class="active">Equipment</a>
+                <a href="chatbot.html">AI Assistant</a>
+            </div>
+            <div class="user-menu">
+                <button class="icon-button">
+                    <i class="fa fa-notifications"></i>
+                </button>
+                <div class="user-avatar">JS</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <i class="fa fa-dashboard"></i>
+                    Dashboard
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-test"></i>
+                    Test Methods
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-calendar"></i>
+                    Calendar
+                </li>
+                <li class="sidebar-item active">
+                    <i class="fa fa-equipment"></i>
+                    Equipment
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-chat"></i>
+                    AI Assistant
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-reports"></i>
+                    Reports
+                </li>
+                <li class="sidebar-item">
+                    <i class="fa fa-settings"></i>
+                    Settings
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1>Laboratory Equipment</h1>
+                    <div>
+                        <button class="btn btn-secondary mr-2">
+                            <i class="fa fa-refresh"></i>
+                            Refresh
+                        </button>
+                        <button class="btn btn-primary">
+                            <i class="fa fa-equipment"></i>
+                            Add Equipment
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tabs mb-4">
+                    <div class="tab active" data-target="all-equipment-tab">All Equipment</div>
+                    <div class="tab" data-target="maintenance-tab">Maintenance</div>
+                    <div class="tab" data-target="calibration-tab">Calibration</div>
+                    <div class="tab" data-target="monitoring-tab">Live Monitoring</div>
+                </div>
+
+                <div id="all-equipment-tab" class="tab-content active">
+                    <div class="row">
+                        <!-- Equipment Card 1 -->
+                        <div class="col col-12 col-md-6 col-lg-4 mb-4">
+                            <div class="card equipment-card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Instron 5967</h2>
+                                    <span class="badge" style="background-color: #4caf50; color: white;">Available</span>
+                                </div>
+                                <div class="card-content">
+                                    <div class="equipment-image" style="background-color: #f5f5f5; height: 150px; display: flex; align-items: center; justify-content: center;">
+                                        <div style="text-align: center;">
+                                            <i class="fa fa-equipment" style="font-size: 48px; color: #757575;"></i>
+                                            <div>Instron 5967 Image</div>
+                                        </div>
+                                    </div>
+                                    <div class="equipment-details mt-3">
+                                        <div class="row">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Type</div>
+                                                <div>Tensile Tester</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Location</div>
+                                                <div>Lab Room 101</div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Last Calibration</div>
+                                                <div>Mar 15, 2025</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Next Calibration</div>
+                                                <div>Jun 15, 2025</div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Status</div>
+                                                <div>Operational</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Utilization</div>
+                                                <div>78%</div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button class="btn btn-primary w-100">View Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Equipment Card 2 -->
+                        <div class="col col-12 col-md-6 col-lg-4 mb-4">
+                            <div class="card equipment-card">
+                                <div class="card-header">
+                                    <h2 class="card-title">SDL Atlas MM</h2>
+                                    <span class="badge" style="background-color: #ff9800; color: white;">In Use</span>
+                                </div>
+                                <div class="card-content">
+                                    <div class="equipment-image" style="background-color: #f5f5f5; height: 150px; display: flex; align-items: center; justify-content: center;">
+                                        <div style="text-align: center;">
+                                            <i class="fa fa-equipment" style="font-size: 48px; color: #757575;"></i>
+                                            <div>SDL Atlas MM Image</div>
+                                        </div>
+                                    </div>
+                                    <div class="equipment-details mt-3">
+                                        <div class="row">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Type</div>
+                                                <div>Martindale Abrasion</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Location</div>
+                                                <div>Lab Room 102</div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Last Calibration</div>
+                                                <div>Feb 10, 2025</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Next Calibration</div>
+                                                <div>May 10, 2025</div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Status</div>
+                                                <div>In Use</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Utilization</div>
+                                                <div>65%</div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button class="btn btn-primary w-100">View Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Equipment Card 3 -->
+                        <div class="col col-12 col-md-6 col-lg-4 mb-4">
+                            <div class="card equipment-card">
+                                <div class="card-header">
+                                    <h2 class="card-title">MESDAN LAB</h2>
+                                    <span class="badge" style="background-color: #4caf50; color: white;">Available</span>
+                                </div>
+                                <div class="card-content">
+                                    <div class="equipment-image" style="background-color: #f5f5f5; height: 150px; display: flex; align-items: center; justify-content: center;">
+                                        <div style="text-align: center;">
+                                            <i class="fa fa-equipment" style="font-size: 48px; color: #757575;"></i>
+                                            <div>MESDAN LAB Image</div>
+                                        </div>
+                                    </div>
+                                    <div class="equipment-details mt-3">
+                                        <div class="row">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Type</div>
+                                                <div>Multi-tester</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Location</div>
+                                                <div>Lab Room 103</div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Last Calibration</div>
+                                                <div>Mar 5, 2025</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Next Calibration</div>
+                                                <div>Jun 5, 2025</div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Status</div>
+                                                <div>Operational</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Utilization</div>
+                                                <div>82%</div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button class="btn btn-primary w-100">View Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Equipment Card 4 -->
+                        <div class="col col-12 col-md-6 col-lg-4 mb-4">
+                            <div class="card equipment-card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Instron 5966</h2>
+                                    <span class="badge" style="background-color: #f44336; color: white;">Maintenance</span>
+                                </div>
+                                <div class="card-content">
+                                    <div class="equipment-image" style="background-color: #f5f5f5; height: 150px; display: flex; align-items: center; justify-content: center;">
+                                        <div style="text-align: center;">
+                                            <i class="fa fa-equipment" style="font-size: 48px; color: #757575;"></i>
+                                            <div>Instron 5966 Image</div>
+                                        </div>
+                                    </div>
+                                    <div class="equipment-details mt-3">
+                                        <div class="row">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Type</div>
+                                                <div>Tensile Tester</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Location</div>
+                                                <div>Lab Room 101</div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Last Calibration</div>
+                                                <div>Jan 20, 2025</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Next Calibration</div>
+                                                <div>Apr 20, 2025</div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Status</div>
+                                                <div>Under Maintenance</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Utilization</div>
+                                                <div>45%</div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button class="btn btn-primary w-100">View Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Equipment Card 5 -->
+                        <div class="col col-12 col-md-6 col-lg-4 mb-4">
+                            <div class="card equipment-card">
+                                <div class="card-header">
+                                    <h2 class="card-title">SDL Atlas CM</h2>
+                                    <span class="badge" style="background-color: #4caf50; color: white;">Available</span>
+                                </div>
+                                <div class="card-content">
+                                    <div class="equipment-image" style="background-color: #f5f5f5; height: 150px; display: flex; align-items: center; justify-content: center;">
+                                        <div style="text-align: center;">
+                                            <i class="fa fa-equipment" style="font-size: 48px; color: #757575;"></i>
+                                            <div>SDL Atlas CM Image</div>
+                                        </div>
+                                    </div>
+                                    <div class="equipment-details mt-3">
+                                        <div class="row">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Type</div>
+                                                <div>Color Measurement</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Location</div>
+                                                <div>Lab Room 104</div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Last Calibration</div>
+                                                <div>Feb 28, 2025</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Next Calibration</div>
+                                                <div>May 28, 2025</div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col col-6">
+                                                <div class="text-muted">Status</div>
+                                                <div>Operational</div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="text-muted">Utilization</div>
+                                                <div>70%</div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button class="btn btn-primary w-100">View Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="maintenance-tab" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Maintenance Schedule</h2>
+                        </div>
+                        <div class="card-content p-0">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Equipment</th>
+                                        <th>Type</th>
+                                        <th>Last Maintenance</th>
+                                        <th>Next Maintenance</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Instron 5967</td>
+                                        <td>Preventive</td>
+                                        <td>Jan 15, 2025</td>
+                                        <td>Jul 15, 2025</td>
+                                        <td><span class="badge" style="background-color: #4caf50; color: white;">Completed</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary">View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>SDL Atlas MM</td>
+                                        <td>Preventive</td>
+                                        <td>Feb 10, 2025</td>
+                                        <td>Apr 3, 2025</td>
+                                        <td><span class="badge" style="background-color: #ff9800; color: white;">Scheduled</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary">View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Instron 5966</td>
+                                        <td>Corrective</td>
+                                        <td>-</td>
+                                        <td>In Progress</td>
+                                        <td><span class="badge" style="background-color: #2196f3; color: white;">In Progress</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary">View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>MESDAN LAB</td>
+                                        <td>Preventive</td>
+                                        <td>Mar 5, 2025</td>
+                                        <td>Sep 5, 2025</td>
+                                        <td><span class="badge" style="background-color: #4caf50; color: white;">Completed</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary">View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>SDL Atlas CM</td>
+                                        <td>Preventive</td>
+                                        <td>Feb 28, 2025</td>
+                                        <td>Aug 28, 2025</td>
+                                        <td><span class="badge" style="background-color: #4caf50; color: white;">Completed</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary">View</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="calibration-tab" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Calibration Schedule</h2>
+                        </div>
+                        <div class="card-content p-0">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Equipment</th>
+                                        <th>Last Calibration</th>
+                                        <th>Next Calibration</th>
+                                        <th>Performed By</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Instron 5967</td>
+                                        <td>Mar 15, 2025</td>
+                                        <td>Jun 15, 2025</td>
+                                        <td>John Smith</td>
+                                        <td><span class="badge" style="background-color: #4caf50; color: white;">Valid</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary">View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>SDL Atlas MM</td>
+                                        <td>Feb 10, 2025</td>
+                                        <td>May 10, 2025</td>
+                                        <td>External Service</td>
+                                        <td><span class="badge" style="background-color: #4caf50; color: white;">Valid</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary">View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Instron 5966</td>
+                                        <td>Jan 20, 2025</td>
+                                        <td>Apr 20, 2025</td>
+                                        <td>Michael Chen</td>
+                                        <td><span class="badge" style="background-color: #ff9800; color: white;">Due Soon</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary">View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>MESDAN LAB</td>
+                                        <td>Mar 5, 2025</td>
+                                        <td>Jun 5, 2025</td>
+                                        <td>External Service</td>
+                                        <td><span class="badge" style="background-color: #4caf50; color: white;">Valid</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary">View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>SDL Atlas CM</td>
+                                        <td>Feb 28, 2025</td>
+                                        <td>May 28, 2025</td>
+                                        <td>Sarah Williams</td>
+                                        <td><span class="badge" style="background-color: #4caf50; color: white;">Valid</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary">View</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="monitoring-tab" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Live Equipment Monitoring</h2>
+                            <span class="card-subtitle">Real-time status of laboratory equipment</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="row">
+                                <!-- Instron 5967 Monitoring -->
+                                <div class="col col-12 col-md-6 mb-4">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Instron 5967</h3>
+                                            <span class="badge" style="background-color: #4caf50; color: white;">Active</span>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="row">
+                                                <div class="col col-6">
+                                                    <div class="text-muted">Current Test</div>
+                                                    <div>Tensile Strength - Sportswear</div>
+                                                </div>
+                                                <div class="col col-6">
+                                                    <div class="text-muted">Progress</div>
+                                                    <div>45% Complete</div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2">
+                                                <div class="progress-bar">
+                                                    <div class="progress-bar-fill" style="width: 45%;"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col col-4">
+                                                    <div class="text-muted">Temperature</div>
+                                                    <div>23.2°C</div>
+                                                </div>
+                                                <div class="col col-4">
+                                                    <div class="text-muted">Humidity</div>
+                                                    <div>48%</div>
+                                                </div>
+                                                <div class="col col-4">
+                                                    <div class="text-muted">Load</div>
+                                                    <div>125.4 N</div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3">
+                                                <button class="btn btn-primary">View Live Data</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- SDL Atlas MM Monitoring -->
+                                <div class="col col-12 col-md-6 mb-4">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header">
+                                            <h3 class="card-title">SDL Atlas MM</h3>
+                                            <span class="badge" style="background-color: #4caf50; color: white;">Active</span>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="row">
+                                                <div class="col col-6">
+                                                    <div class="text-muted">Current Test</div>
+                                                    <div>Abrasion Resistance - Automotive</div>
+                                                </div>
+                                                <div class="col col-6">
+                                                    <div class="text-muted">Progress</div>
+                                                    <div>78% Complete</div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2">
+                                                <div class="progress-bar">
+                                                    <div class="progress-bar-fill" style="width: 78%;"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col col-4">
+                                                    <div class="text-muted">Temperature</div>
+                                                    <div>22.8°C</div>
+                                                </div>
+                                                <div class="col col-4">
+                                                    <div class="text-muted">Humidity</div>
+                                                    <div>51%</div>
+                                                </div>
+                                                <div class="col col-4">
+                                                    <div class="text-muted">Cycles</div>
+                                                    <div>15,642</div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3">
+                                                <button class="btn btn-primary">View Live Data</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

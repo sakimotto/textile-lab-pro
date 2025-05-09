@@ -3,7 +3,7 @@
 import React from 'react';
 import ThemeRegistry from '@/components/providers/ThemeRegistry';
 import ThemeModeProvider from '@/components/providers/ThemeContext';
-import MainLayout from '@/components/layouts/MainLayout';
+import { Box } from '@mui/material';
 
 export default function Providers({
   children,
@@ -13,7 +13,9 @@ export default function Providers({
   return (
     <ThemeRegistry>
       <ThemeModeProvider>
-        <MainLayout>{children}</MainLayout>
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          {children}
+        </Box>
       </ThemeModeProvider>
     </ThemeRegistry>
   );
